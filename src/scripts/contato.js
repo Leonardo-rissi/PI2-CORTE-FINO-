@@ -191,7 +191,7 @@ function mostrarSucessoContato() {
   let div = document.createElement("div");
 
   div.textContent =
-    "✓ Mensagem enviada! Nossa equipe entrará em contato em breve.";
+    "Mensagem enviada! Nossa equipe entrará em contato em breve.";
 
   div.style.cssText = `
     position: fixed;
