@@ -1,0 +1,31 @@
+{
+  "name": "pi-corte-fino-rfc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.8"
+  },
+  "description": "Padrão de trabalho em equipe para o repositório [PI-CORTE-FINO-REFAT](https://github.com/GiovaniCavalheri/PI-CORTE-FINO-REFAT).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiovaniCavalheri/PI-CORTE-FINO-REFAT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GiovaniCavalheri/PI-CORTE-FINO-REFAT/issues"
+  },
+  "homepage": "https://github.com/GiovaniCavalheri/PI-CORTE-FINO-REFAT#readme"
+}
