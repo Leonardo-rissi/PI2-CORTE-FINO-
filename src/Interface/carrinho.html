@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrinho – Açougue</title>
+
+  <!-- Coloque aqui o link do seu CSS principal para manter o visual do site -->
+  <!-- <link rel="stylesheet" href="style.css"/> -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --vermelho:    #c0392b;
+      --vermelho-dk: #922b21;
+      --creme:       #fdf6ee;
+      --marrom:      #3e1f0d;
+      --marrom-md:   #7b3f1e;
+      --cinza-claro: #f0e8df;
+      --branco:      #ffffff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--creme);
+      color: var(--marrom);
+      margin: 0; padding: 0;
+    }
+
+    /* ── PÁGINA DO CARRINHO ── */
+    .carrinho-pagina {
+      max-width: 750px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem;
+    }
+    .carrinho-pagina h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      border-left: 5px solid var(--vermelho);
+      padding-left: .75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── ITEM ── */
+    .item-carrinho {
+      background: var(--branco);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px rgba(60,20,10,.08);
+      animation: deslizar .25s ease;
+    }
+    @keyframes deslizar {
+      from { opacity:0; transform: translateY(10px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .item-carrinho img {
+      width: 72px; height: 72px;
+      border-radius: 8px; object-fit: cover; flex-shrink: 0;
+    }
+    .item-info { flex: 1; min-width: 0; }
+    .item-nome {
+      font-weight: 700; font-size: 1rem; color: var(--marrom);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .item-unit { font-size: .78rem; color: var(--marrom-md); margin-bottom: .3rem; }
+    .item-preco {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--vermelho); font-weight: 700;
+    }
+    .controles-qtd { display: flex; align-items: center; gap: .5rem; }
+    .controles-qtd button {
+      background: var(--cinza-claro); border: none;
+      width: 30px; height: 30px; border-radius: 50%;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--marrom); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .controles-qtd button:hover { background: var(--vermelho); color: #fff; }
+    .controles-qtd span { min-width: 24px; text-align: center; font-weight: 700; }
+    .btn-remover {
+      background: none; border: none;
+      font-size: 1.2rem; cursor: pointer;
+      color: #ccc; transition: color .15s; padding: .2rem;
+    }
+    .btn-remover:hover { color: var(--vermelho); }
+
+    /* ── CARRINHO VAZIO ── */
+    .carrinho-vazio {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--marrom-md);
+    }
+    .carrinho-vazio .emoji { font-size: 3.5rem; display: block; margin-bottom: 1rem; }
+    .carrinho-vazio p { font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .btn-voltar {
+      display: inline-block;
+      background: var(--vermelho);
+      color: #fff; border: none; border-radius: 10px;
+      padding: .75rem 1.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background .18s;
+    }
+    .btn-voltar:hover { background: var(--vermelho-dk); }
+
+    /* ── RESUMO / TOTAL ── */
+    .resumo {
+      background: var(--branco);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(60,20,10,.08);
+      margin-top: 1.5rem;
+    }
+    .resumo-linha {
+      display: flex; justify-content: space-between;
+      font-size: .95rem; color: var(--marrom-md);
+      margin-bottom: .5rem;
+    }
+    .resumo-total {
+      display: flex; justify-content: space-between;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--marrom);
+      border-top: 2px solid var(--cinza-claro);
+      padding-top: 1rem; margin-top: .5rem; margin-bottom: 1.25rem;
+    }
+    .resumo-total span:last-child { color: var(--vermelho); }
+    .btn-finalizar {
+      width: 100%;
+      background: var(--vermelho); color: #fff;
+      border: none; border-radius: 10px;
+      padding: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; letter-spacing: .04em;
+      transition: background .18s;
+    }
+    .btn-finalizar:hover { background: var(--vermelho-dk); }
+    .btn-limpar {
+      width: 100%; background: none;
+      border: 1.5px solid var(--cinza-claro);
+      border-radius: 10px; padding: .65rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; color: var(--marrom-md);
+      cursor: pointer; margin-top: .6rem;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-limpar:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--marrom); color: var(--creme);
+      padding: .7rem 1.2rem; border-radius: 8px;
+      font-size: .9rem; font-weight: 500;
+      z-index: 999; opacity: 0; transform: translateY(10px);
+      transition: opacity .25s, transform .25s; pointer-events: none;
+    }
+    #toast.mostrar { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGAÇÃO DO SEU SITE (copie o menu que você já usa) -->
+  <!-- <nav>...</nav> -->
+
+  <div class="carrinho-pagina">
+    <h1>Meu Carrinho</h1>
+
+    <!-- Lista de itens (preenchida pelo JS) -->
+    <div id="lista-itens"></div>
+
+    <!-- Resumo (preenchido pelo JS) -->
+    <div class="resumo" id="resumo" style="display:none">
+      <div class="resumo-linha">
+        <span>Subtotal (<span id="qtd-total">0</span> itens)</span>
+        <span id="subtotal-val">R$ 0,00</span>
+      </div>
+      <div class="resumo-total">
+        <span>Total</span>
+        <span id="total-val">R$ 0,00</span>
+      </div>
+      <button class="btn-finalizar" onclick="finalizarPedido()">Finalizar Pedido →</button>
+      <button class="btn-limpar" onclick="limparCarrinho()">Limpar carrinho</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+  // ════════════════════════════════════════════════
+  // EDITE AQUI: os mesmos produtos do seu index.html
+  // ════════════════════════════════════════════════
+  const catalogo = [
+    { id: 1, nome: 'Picanha',          preco: 89.90,  unidade: 'por kg', img: 'URL_DA_IMAGEM' },
+    { id: 2, nome: 'Fraldinha',        preco: 54.90,  unidade: 'por kg', img: 'URL_DA_IMAGEM' },
+    { id: 3, nome: 'Costela Bovina',   preco: 42.90,  unidade: 'por kg', img: 'URL_DA_IMAGEM' },
+    { id: 4, nome: 'Filé Mignon',      preco: 119.90, unidade: 'por kg', img: 'URL_DA_IMAGEM' },
+  ];
+
+  // Carrega carrinho salvo no navegador
+  let carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+
+  function salvar() {
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  }
+
+  function alterarQuantidade(id, delta) {
+    const item = carrinho.find(i => i.id === id);
+    if (!item) return;
+    item.qtd += delta;
+    if (item.qtd <= 0) carrinho = carrinho.filter(i => i.id !== id);
+    salvar();
+    renderizar();
+  }
+
+  function removerDoCarrinho(id) {
+    carrinho = carrinho.filter(i => i.id !== id);
+    salvar();
+    renderizar();
+  }
+
+  function limparCarrinho() {
+    carrinho = [];
+    salvar();
+    renderizar();
+  }
+
+  function finalizarPedido() {
+    // ── PERSONALIZE AQUI: WhatsApp, API, etc. ──
+    const linhas = carrinho.map(i =>
+      `• ${i.qtd}x ${i.nome} — R$ ${(i.preco * i.qtd).toFixed(2).replace('.',',')}`
+    ).join('\n');
+    alert(`Pedido recebido! 🎉\n\n${linhas}\n\nTotal: ${formatarMoeda(calcularTotal())}`);
+  }
+
+  function calcularTotal()   { return carrinho.reduce((s, i) => s + i.preco * i.qtd, 0); }
+  function calcularQtd()     { return carrinho.reduce((s, i) => s + i.qtd, 0); }
+  function formatarMoeda(v)  { return 'R$ ' + v.toFixed(2).replace('.', ','); }
+
+  function renderizar() {
+    const lista   = document.getElementById('lista-itens');
+    const resumo  = document.getElementById('resumo');
+
+    if (carrinho.length === 0) {
+      lista.innerHTML = `
+        <div class="carrinho-vazio">
+          <span class="emoji"></span>
+          <p>Seu carrinho está vazio.</p>
+          <a class="btn-voltar" href="index.html">← Ver produtos</a>
+        </div>`;
+      resumo.style.display = 'none';
+      return;
+    }
+
+    lista.innerHTML = carrinho.map(i => `
+      <div class="item-carrinho">
+        <img src="${i.img}" alt="${i.nome}"/>
+        <div class="item-info">
+          <div class="item-nome">${i.nome}</div>
+          <div class="item-unit">${i.unidade}</div>
+          <div class="item-preco">${formatarMoeda(i.preco * i.qtd)}</div>
+        </div>
+        <div class="controles-qtd">
+          <button onclick="alterarQuantidade(${i.id}, -1)">−</button>
+          <span>${i.qtd}</span>
+          <button onclick="alterarQuantidade(${i.id}, +1)">+</button>
+        </div>
+        <button class="btn-remover" onclick="removerDoCarrinho(${i.id})">🗑</button>
+      </div>
+    `).join('');
+
+    resumo.style.display = 'block';
+    document.getElementById('qtd-total').textContent    = calcularQtd();
+    document.getElementById('subtotal-val').textContent = formatarMoeda(calcularTotal());
+    document.getElementById('total-val').textContent    = formatarMoeda(calcularTotal());
+  }
+
+  let toastTimer;
+  function mostrarToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('mostrar');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('mostrar'), 2000);
+  }
+
+  // Inicia
+  renderizar();
+  </script>
+
+</body>
+</html>

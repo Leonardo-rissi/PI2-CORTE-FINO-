@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^7.3.1"
+    "vite": "^7.3.5"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
